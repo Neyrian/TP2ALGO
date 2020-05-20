@@ -66,6 +66,11 @@ int main(int argc, char** argv) {
       printf("La clef %d n'est pas présente\n", clef_ask);
     }
   }
+
+  printf ("==== Afficher arbre ====\n") ;
+  afficher_arbre (arbre_test, 0) ;
+  printf("Test de la fonction noeud max\n Noeud max : \n");
+  afficher_arbre(noeud_max(arbre_test), 0);
   //printf("Test de la fonction clef min\nResultat : %d, Resultat attendu : %d\n", CleMin(arbre_test), clefmin(argv[1]));
   //printf("Test de la fonction clef max\nResultat : %d, Resultat attendu : %d\n", CleMax(arbre_test), clefmax(argv[1]));
   return 0;

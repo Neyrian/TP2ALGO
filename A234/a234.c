@@ -111,11 +111,34 @@ void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3,
 
 Arbre234 noeud_max (Arbre234 a)
 {
-  /*
-    Retourne le noeud avec la somme maximale des cles internes
-  */
+  if(a == NULL){
+    return NULL;
+  }
 
-  return NULL ;
+  if(a->t == 0){
+    return NULL;
+  }
+  while (1) {
+    switch (a->t) {
+      case 0:
+        return NULL;
+      case 2:
+      case 3:
+        if (a->fils[2]->t != 0) {
+          a = a->fils[2];
+        } else {
+          return a;
+        }
+      break;
+      case 4:
+        if (a->fils[3]->t != 0) {
+          a = a->fils[3];
+        } else {
+          return a;
+        }
+      break;
+    }
+  }
 }
 
 
