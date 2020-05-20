@@ -24,3 +24,7 @@ void ajouter_cle (Arbre234 *a, int cle, int niveau, Arbre234 pere) ;
 int NombreCles (Arbre234 a);
 
 Arbre234 RechercherCle (Arbre234 a, int cle);
+
+int CleMax (Arbre234 a);
+
+int CleMin (Arbre234 a);
