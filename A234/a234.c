@@ -79,10 +79,10 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
       return a;
     }
     if(cle_act < cle){
-      return RechercherCle(a->fils[i]);
+      return RechercherCle(a->fils[i], cle);
     }
   }
-  return RechercherCle(a->fils[i]);
+  return RechercherCle(a->fils[i], cle);
 }
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
