@@ -49,7 +49,7 @@ int CleMax (Arbre234 a)
   if ((a == NULL) || (a->t == 0)){
     return 0;
   }
-  int index = a->t-1; 
+  int index = a->t-1;
   if (a->fils[index]->t != 0){
     return CleMax(a->fils[index]);
   } else {
@@ -75,21 +75,31 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
     return NULL;
   }
 
-  if(a->t == 0){
-    return NULL;
-  }
-
   int i;
-  for (i = 0; i<a->t-1;i++) {
-    int cle_act = a->cles[i];
-    if(cle_act == cle){
-      return a;
-    }
-    if(cle_act < cle){
-      return RechercherCle(a->fils[i],cle);
-    }
+
+  switch(a->t){
+    case 0:
+      return NULL;
+    case 2:
+      if(cle == a->cles[1]){
+        return a;
+      }
+      if(cle < a->cles[1]){
+        return RechercherCle(a->fils[1], cle);
+      }
+      return RechercherCle(a->fils[2], cle);
+    default:
+      for (i = 0; i<a->t;i++) {
+        int cle_act = a->cles[i];
+        if(cle_act == cle){
+          return a;
+        }
+        if(cle_act < cle){
+          return RechercherCle(a->fils[i], cle);
+        }
+      }
+      return RechercherCle(a->fils[i], cle);
   }
-  return RechercherCle(a->fils[i],cle);
 }
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
