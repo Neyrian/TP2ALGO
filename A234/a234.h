@@ -28,3 +28,5 @@ Arbre234 RechercherCle (Arbre234 a, int cle);
 int CleMax (Arbre234 a);
 
 int CleMin (Arbre234 a);
+
+Arbre234 noeud_max (Arbre234 a);

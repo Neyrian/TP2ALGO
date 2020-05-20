@@ -108,7 +108,7 @@ Arbre234 noeud_max (Arbre234 a)
   if(a->t == 0){
     return NULL;
   }
-  while (true) {
+  while (1) {
     switch (a->t) {
       case 0:
         return NULL;
