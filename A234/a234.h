@@ -1,4 +1,5 @@
-
+#ifndef A234_H
+#define A234_H
 
 /* structure noeud presentee en cours */
 
@@ -30,3 +31,5 @@ int CleMax (Arbre234 a);
 int CleMin (Arbre234 a);
 
 Arbre234 noeud_max (Arbre234 a);
+
+#endif
