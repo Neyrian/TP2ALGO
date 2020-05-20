@@ -26,6 +26,6 @@ int main(int argc, char** argv) {
   Arbre234 arbre_test = lire_arbre (argv[1]) ;
   printf ("==== Afficher arbre ====\n") ;
   afficher_arbre (arbre_test, 0) ;
-  printf("Test de la fonction nombre de clef\nResultat : %d, Resultat attentu : %d ", NombreCles(arbre_test), nbclef(argv[1]));
+  printf("Test de la fonction nombre de clef\nResultat : %d, Resultat attentu : %d \n", NombreCles(arbre_test), nbclef(argv[1]));
   return 0;
 }

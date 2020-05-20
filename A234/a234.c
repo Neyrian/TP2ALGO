@@ -79,10 +79,10 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
       return a;
     }
     if(cle_act < cle){
-      return RechercherCle(a->fils[i]);
+      return RechercherCle(a->fils[i],cle);
     }
   }
-  return RechercherCle(a->fils[i]);
+  return RechercherCle(a->fils[i],cle);
 }
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
@@ -139,25 +139,4 @@ void Detruire_Cle (Arbre234 *a, int cle)
   */
 
   return ;
-}
-
-
-
-
-int main (int argc, char **argv)
-{
-  Arbre234 a ;
-
-  if (argc != 2)
-    {
-      fprintf (stderr, "il manque le parametre nom de fichier\n") ;
-      exit (-1) ;
-    }
-
-  a = lire_arbre (argv [1]) ;
-
-  printf ("==== Afficher arbre ====\n") ;
-
-  afficher_arbre (a, 0) ;
-
 }
