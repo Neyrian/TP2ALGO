@@ -89,12 +89,12 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
       }
       return RechercherCle(a->fils[2], cle);
     default:
-      for (i = 0; i<a->t;i++) {
+      for (i = 0; i<a->t-1;i++) {
         int cle_act = a->cles[i];
         if(cle_act == cle){
           return a;
         }
-        if(cle_act < cle){
+        if(cle_act > cle){
           return RechercherCle(a->fils[i], cle);
         }
       }
