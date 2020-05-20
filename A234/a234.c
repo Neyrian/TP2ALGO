@@ -36,20 +36,27 @@ int NombreCles (Arbre234 a)
 
 int CleMax (Arbre234 a)
 {
-  /*
-     plus grande cle de l'arbre a
-  */
-  
-  return 0 ;
+  if ((a == NULL) || (a->t == 0)){
+    return 0;
+  }
+  int index = a->t-1; 
+  if (a->fils[index]->t != 0){
+    return CleMax(a->fils[index]);
+  } else {
+    return a->cles[index];
+  }
 }
 
 int CleMin (Arbre234 a)
 {
-  /*
-     Retourne plus petite cle de l'arbre a
-  */
-
-  return 0 ;
+  if ((a == NULL) || (a->t == 0)){
+    return 0;
+  }
+  if (a->fils[0]->t != 0){
+    return CleMax(a->fils[0]);
+  } else {
+    return a->cles[0];
+  }
 }
 
 Arbre234 RechercherCle (Arbre234 a, int cle)
@@ -64,9 +71,9 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
 {
-  /* 
-     calculer le nombre de feuilles, de 2-noeuds, 3-noeuds,et 4-noeuds
-  */
+  if (a == NULL){
+    return;
+  }
 }
 
 Arbre234 noeud_max (Arbre234 a)
