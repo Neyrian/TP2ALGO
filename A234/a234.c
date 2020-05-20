@@ -10,7 +10,7 @@
 int hauteur (Arbre234 a)
 {
   int h0, h1, h2, h3 ;
-  
+
   if (a == NULL)
     return 0 ;
 
@@ -23,15 +23,25 @@ int hauteur (Arbre234 a)
   h3 = hauteur (a->fils [3]) ;
 
   return 1 + max (max (h0,h1),max (h2,h3)) ;
-} 
+}
 
 int NombreCles (Arbre234 a)
 {
-  /*
-     Retourne le nombre de cles presentes dans l'arbre a
-  */
-  
-  return 0 ;
+  if(a == NULL){
+    return 0;
+  }
+
+  if(a->t == 0){
+    return 0;
+  }
+
+  int res = a->t - 1;
+
+  for(int i = 0; i < a->t; i++){
+    res += NombreCles(a->fils[i]);
+  }
+
+  return res;
 }
 
 int CleMax (Arbre234 a)
@@ -39,7 +49,7 @@ int CleMax (Arbre234 a)
   /*
      plus grande cle de l'arbre a
   */
-  
+
   return 0 ;
 }
 
@@ -58,13 +68,22 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
      rechercher si la cle a est presente dans
      l'arbre a. Si oui, retourne le noeud ou se trouve la cle.
   */
+  for (int i = 0; i<a->t-1;i++) {
+    int cle_act = a->cles[i];
+    if(cle_act == cle){
+      return a;
+    }
+    if(cle_act < cle){
+      return RechercherCle(a->fils[i]);
+    }
+  }
 
   return NULL ;
 }
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
 {
-  /* 
+  /*
      calculer le nombre de feuilles, de 2-noeuds, 3-noeuds,et 4-noeuds
   */
 }
@@ -74,7 +93,7 @@ Arbre234 noeud_max (Arbre234 a)
   /*
     Retourne le noeud avec la somme maximale des cles internes
   */
-  
+
   return NULL ;
 }
 
@@ -91,16 +110,16 @@ void Afficher_Cles_Largeur (Arbre234 a)
 
 void Affichage_Cles_Triees_Recursive (Arbre234 a)
 {
-  /* 
+  /*
      Afficher les cles en ordre croissant
      Cette fonction sera recursive
   */
-     
+
 }
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 {
-    /* 
+    /*
      Afficher les cles en ordre croissant
      Cette fonction ne sera pas recursive
      Utiliser une pile
@@ -134,7 +153,7 @@ int main (int argc, char **argv)
   a = lire_arbre (argv [1]) ;
 
   printf ("==== Afficher arbre ====\n") ;
-  
+
   afficher_arbre (a, 0) ;
 
 }
