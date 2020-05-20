@@ -29,6 +29,8 @@ int CleMax (Arbre234 a);
 
 int CleMin (Arbre234 a);
 
+<<<<<<< HEAD
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4);
-
+=======
 Arbre234 noeud_max (Arbre234 a);
+>>>>>>> test
