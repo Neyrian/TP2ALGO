@@ -49,7 +49,7 @@ int CleMax (Arbre234 a)
   if ((a == NULL) || (a->t == 0)){
     return 0;
   }
-  int index = a->t-1; 
+  int index = a->t-1;
   if (a->fils[index]->t != 0){
     return CleMax(a->fils[index]);
   } else {
@@ -101,11 +101,34 @@ void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3,
 
 Arbre234 noeud_max (Arbre234 a)
 {
-  /*
-    Retourne le noeud avec la somme maximale des cles internes
-  */
+  if(a == NULL){
+    return NULL;
+  }
 
-  return NULL ;
+  if(a->t == 0){
+    return NULL;
+  }
+  while (true) {
+    switch (a->t) {
+      case 0:
+        return NULL;
+      case 2:
+      case 3:
+        if (a->fils[2]->t != 0) {
+          a = a->fils[2];
+        } else {
+          return a;
+        }
+      break;
+      case 4:
+        if (a->fils[3]->t != 0) {
+          a = a->fils[3];
+        } else {
+          return a;
+        }
+      break;
+    }
+  }
 }
 
 
