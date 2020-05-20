@@ -37,7 +37,7 @@ int NombreCles (Arbre234 a)
 
   int res = a->t - 1;
 
-  for(int i = 0; i < a->t; i++){
+  for(int i = 0; i < 4; i++){
     res += NombreCles(a->fils[i]);
   }
 
