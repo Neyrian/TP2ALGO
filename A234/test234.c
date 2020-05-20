@@ -54,7 +54,19 @@ int main(int argc, char** argv) {
   printf ("==== Afficher arbre ====\n") ;
   afficher_arbre (arbre_test, 0) ;
   printf("Test de la fonction nombre de clef\nResultat : %d, Resultat attendu : %d \n", NombreCles(arbre_test), nbclef(argv[1]));
-  printf("Test de la fonction clef min\nResultat : %d, Resultat attendu : %d\n", CleMin(arbre_test), clefmin(argv[1]));
-  printf("Test de la fonction clef max\nResultat : %d, Resultat attendu : %d\n", CleMax(arbre_test), clefmax(argv[1]));
+
+  int clef_ask = 0;
+  printf("Test de la fonction RechercherCle\n");
+  while (clef_ask != -1) {
+    printf("Entrez clef rechercher (-1 pour quiter) : ");
+    scanf("%d", &clef_ask);
+    if (RechercherCle(arbre_test, clef_ask) != NULL) {
+      printf("La clef %d est présente\n", clef_ask);
+    } else {
+      printf("La clef %d n'est pas présente\n", clef_ask);
+    }
+  }
+  //printf("Test de la fonction clef min\nResultat : %d, Resultat attendu : %d\n", CleMin(arbre_test), clefmin(argv[1]));
+  //printf("Test de la fonction clef max\nResultat : %d, Resultat attendu : %d\n", CleMax(arbre_test), clefmax(argv[1]));
   return 0;
 }
