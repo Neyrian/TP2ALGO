@@ -145,11 +145,31 @@ void Afficher_Cles_Largeur (Arbre234 a)
       case 0:
         break;
       case 2:
-        printf("%d ", tmp->cle[1]);
+        printf("%d ", tmp->cles[1]);
         enfiler(f_fils, tmp->fils[1]);
+        enfiler(f_fils, tmp->fils[2]);
+        break;
+      case 3:
+        printf("%d ", tmp->cles[0]);
+        printf("%d ", tmp->cles[1]);
+        enfiler(f_fils, tmp->fils[0]);
         enfiler(f_fils, tmp->fils[1]);
+        enfiler(f_fils, tmp->fils[2]);
+        break;
+      case 4:
+        printf("%d ", tmp->cles[0]);
+        printf("%d ", tmp->cles[1]);
+        printf("%d ", tmp->cles[2]);
+        enfiler(f_fils, tmp->fils[0]);
+        enfiler(f_fils, tmp->fils[1]);
+        enfiler(f_fils, tmp->fils[2]);
+        enfiler(f_fils, tmp->fils[3]);
+        break;
     }
+    f_act = f_fils;
+    f_fils = creer_file();
   }
+  printf("\n");
   return ;
 }
 

@@ -5,11 +5,11 @@ OPTIONS_COMPIL=-Wall -g -c
 a234: a234.o lire_affichage.o ajout_cle.o file.o
 	gcc -o a234 a234.o lire_affichage.o ajout_cle.o file.o
 
-a234.o: a234.c a234.h file.h
+a234.o: a234.c a234.h
 	gcc $(OPTIONS_COMPIL) a234.c
 
-test234: test234.o lire_affichage.o ajout_cle.o a234.o
-	gcc -o test234 test234.o a234.o lire_affichage.o ajout_cle.o
+test234: test234.o lire_affichage.o ajout_cle.o a234.o file.o
+	gcc -o test234 test234.o a234.o lire_affichage.o ajout_cle.o file.o
 
 test234.o: test234.c
 	gcc $(OPTIONS_COMPIL) test234.c
@@ -21,7 +21,7 @@ ajout_cle.o : ajout_cle.c a234.h
 	gcc $(OPTIONS_COMPIL) ajout_cle.c
 
 file.o: file.h file.c
-	gcc -Wall -c file.c
+	gcc $(OPTIONS_COMPIL) file.c
 
 clean:
 	rm -rf test234 *.o *~

@@ -32,4 +32,6 @@ int CleMin (Arbre234 a);
 
 Arbre234 noeud_max (Arbre234 a);
 
+void Afficher_Cles_Largeur (Arbre234 a);
+
 #endif
