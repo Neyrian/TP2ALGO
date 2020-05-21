@@ -49,12 +49,20 @@ int CleMax (Arbre234 a)
   if ((a == NULL) || (a->t == 0)){
     return 0;
   }
-  int index = a->t-1;
-  if (a->fils[index]->t != 0){
-    return CleMax(a->fils[index]);
-  } else {
-    return a->cles[index];
+  switch(a->t){
+    case 2:
+    case 3:
+      if (a->fils[2]->t == 0) {
+        return a->cles[1];
+      }
+      return CleMax(a->fils[2]);
+    case 4:
+      if (a->fils[3]->t == 0) {
+          return a->cles[2];
+      }
+      return CleMax(a->fils[3]);
   }
+  return 0;
 }
 
 int CleMin (Arbre234 a)
@@ -62,11 +70,20 @@ int CleMin (Arbre234 a)
   if ((a == NULL) || (a->t == 0)){
     return 0;
   }
-  if (a->fils[0]->t != 0){
-    return CleMax(a->fils[0]);
-  } else {
-    return a->cles[0];
+  switch(a->t){
+    case 2:
+      if (a->fils[1]->t == 0) {
+          return a->cles[1];
+      }
+      return CleMin(a->fils[1]);
+    case 3:
+    case 4:
+      if (a->fils[0]->t == 0) {
+          return a->cles[0];
+      }
+      return CleMin(a->fils[0]);
   }
+  return 0;
 }
 
 Arbre234 RechercherCle (Arbre234 a, int cle)
@@ -131,11 +148,36 @@ void Afficher_Cles_Largeur (Arbre234 a)
 
 void Affichage_Cles_Triees_Recursive (Arbre234 a)
 {
-  /*
-     Afficher les cles en ordre croissant
-     Cette fonction sera recursive
-  */
+  if(a == NULL){
+    return;
+  }
 
+  switch (a->t){
+    case 0:
+      return;
+    case 2:
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d\n", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+      return;
+    case 3:
+      Affichage_Cles_Triees_Recursive(a->fils[0]);
+      printf("%d\n", a->cles[0]);
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d\n", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+      return;
+    case 4:
+      Affichage_Cles_Triees_Recursive(a->fils[0]);
+      printf("%d\n", a->cles[0]);
+      Affichage_Cles_Triees_Recursive(a->fils[1]);
+      printf("%d\n", a->cles[1]);
+      Affichage_Cles_Triees_Recursive(a->fils[2]);
+      printf("%d\n", a->cles[2]);
+      Affichage_Cles_Triees_Recursive(a->fils[3]);
+      return;
+  }
+  return;
 }
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a)

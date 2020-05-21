@@ -28,3 +28,9 @@ Arbre234 RechercherCle (Arbre234 a, int cle);
 int CleMax (Arbre234 a);
 
 int CleMin (Arbre234 a);
+
+void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4);
+
+Arbre234 noeud_max (Arbre234 a);
+
+void Affichage_Cles_Triees_Recursive (Arbre234 a);
