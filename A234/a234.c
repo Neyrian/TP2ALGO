@@ -266,7 +266,7 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
   while (!pile_vide(ATraiter)) {
     arbreTmp = depiler(ATraiter);
     if (arbreTmp != NULL) {
-      for (int i =; i < 4; i ++) {
+      for (int i = 0; i < 4; i ++) {
         empiler(ATraiter, arbreTmp->fils[i]);
         empiler(ATraiter, arbreTmp);
       }

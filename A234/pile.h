@@ -10,6 +10,11 @@ typedef struct {
   Arbre234 Tab [MAX_PILE_SIZE] ;
 } pile_t, *ppile_t ;
 
+typedef struct {
+  int sommet ;
+  int Tab [MAX_PILE_SIZE] ;
+} pile_int, *ppile_int ;
+
 ppile_t creer_pile () ;
 
 int detruire_pile (ppile_t p) ;
@@ -21,5 +26,17 @@ int pile_pleine (ppile_t p) ;
 Arbre234 depiler (ppile_t p)  ;
 
 int empiler (ppile_t p, Arbre234 pn) ;
+
+ppile_int creer_pile_int () ;
+
+int detruire_pile_int (ppile_int p) ;
+
+int pile_vide_int (ppile_int p) ;
+
+int pile_pleine_int (ppile_int p) ;
+
+int depiler_int (ppile_int p)  ;
+
+int empiler_int (ppile_int p, int pn) ;
 
  #endif
