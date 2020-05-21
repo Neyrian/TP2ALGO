@@ -265,11 +265,45 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
   }
   ppile_t ATraiter = creer_pile();
   empiler(ATraiter, a);
-  ppile_int AAfficher = creer_pile_int();
+  ppile_int NbPassage = creer_pile_int();
+  empiler_int(NbPassage, 0);
   Arbre234 arbreTmp;
+  int tmp;
   while (!pile_vide(ATraiter)) {
     arbreTmp = depiler(ATraiter);
-    if(AAfficher)
+    tmp = depiler_int(NbPassage);
+    switch(arbreTmp->t){
+      case 2:
+        if(tmp == 0){
+          empiler(ATraiter, arbreTmp);
+          empiler_int(NbPassage, 1);
+          empiler(ATraiter, arbreTmp->fils[1]);
+          empiler_int(NbPassage, 0);
+        } else {
+          printf("%d ", arbreTmp->cles[1]);
+          empiler(ATraiter, arbreTmp->fils[2]);
+          empiler_int(NbPassage, 0);
+        }
+        break;
+      case 3:
+        if(tmp == 0){
+          empiler(ATraiter, arbreTmp);
+          empiler_int(NbPassage, 1);
+          empiler(ATraiter, arbreTmp->fils[0]);
+          empiler_int(NbPassage, 0);
+        } else if(tmp == 0){
+          printf("%d ", arbreTmp->cles[1]);
+          empiler(ATraiter, arbreTmp);
+          empiler_int(NbPassage, 1);
+          empiler(ATraiter, arbreTmp->fils[1]);
+          empiler_int(NbPassage, 0);
+        } else {
+          printf("%d ", arbreTmp->cles[1]);
+          empiler(ATraiter, arbreTmp->fils[2]);
+          empiler_int(NbPassage, 0);
+        }
+        break;
+    }
   }
 
 }
