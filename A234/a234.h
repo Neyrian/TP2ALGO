@@ -36,4 +36,6 @@ Arbre234 noeud_max (Arbre234 a);
 
 void Afficher_Cles_Largeur (Arbre234 a);
 
+void Affichage_Cles_Triees_Recursive (Arbre234 a);
+
 #endif

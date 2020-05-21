@@ -75,5 +75,6 @@ int main(int argc, char** argv) {
   printf("Test de la fonction clef max\nResultat : %d, Resultat attendu : %d\n", CleMax(arbre_test), clefmax(argv[1]));
 
   Afficher_Cles_Largeur (arbre_test);
+  Affichage_Cles_Triees_Recursive (arbre_test);
   return 0;
 }
