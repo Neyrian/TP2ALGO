@@ -4,6 +4,7 @@
 
 #include "a234.h"
 #include "file.h"
+#include "pile.h"
 
 #define max(a,b) ((a)>(b)?(a):(b))
 
@@ -221,7 +222,6 @@ void Afficher_Cles_Largeur (Arbre234 a)
   } while (!file_vide(f_act));
 
   printf("\n");
-  return ;
 }
 
 void Affichage_Cles_Triees_Recursive (Arbre234 a)
@@ -260,11 +260,18 @@ void Affichage_Cles_Triees_Recursive (Arbre234 a)
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 {
-    /*
-     Afficher les cles en ordre croissant
-     Cette fonction ne sera pas recursive
-     Utiliser une pile
-  */
+  ppile_t ATraiter = creer_pile();
+  empiler(ATraiter, a);
+  Arbre234 arbreTmp;
+  while (!pile_vide(ATraiter)) {
+    arbreTmp = depiler(ATraiter);
+    if (arbreTmp != NULL) {
+      for (int i =; i < 4; i ++) {
+        empiler(ATraiter, arbreTmp->fils[i]);
+        empiler(ATraiter, arbreTmp);
+      }
+    }
+  }
 
 }
 
