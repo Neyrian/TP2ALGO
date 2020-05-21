@@ -73,5 +73,7 @@ int main(int argc, char** argv) {
   afficher_arbre(noeud_max(arbre_test), 0);
   printf("Test de la fonction clef min\nResultat : %d, Resultat attendu : %d\n", CleMin(arbre_test), clefmin(argv[1]));
   printf("Test de la fonction clef max\nResultat : %d, Resultat attendu : %d\n", CleMax(arbre_test), clefmax(argv[1]));
+
+  Afficher_Cles_Largeur (arbre_test);
   return 0;
 }

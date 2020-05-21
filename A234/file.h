@@ -3,7 +3,7 @@
 
 #include "a234.h"
 
-#define MAX_FILE_SIZE       32
+#define MAX_FILE_SIZE       64
 
 typedef struct {
   int tete ;

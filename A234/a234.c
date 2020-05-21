@@ -62,7 +62,7 @@ int CleMax (Arbre234 a)
           return a->cles[2];
       }
       return CleMax(a->fils[3]);
-  }   
+  }
   return 0;
 }
 
@@ -83,7 +83,7 @@ int CleMin (Arbre234 a)
           return a->cles[0];
       }
       return CleMin(a->fils[0]);
-  }   
+  }
   return 0;
 }
 
@@ -187,36 +187,39 @@ void Afficher_Cles_Largeur (Arbre234 a)
   pfile_t f_fils = creer_file();
   enfiler(f_act, a);
   Arbre234 tmp;
-  while (!file_vide(f_act)) {
-    tmp = defiler(f_act);
-    switch (tmp->t) {
-      case 0:
-        break;
-      case 2:
-        printf("%d ", tmp->cles[1]);
-        enfiler(f_fils, tmp->fils[1]);
-        enfiler(f_fils, tmp->fils[2]);
-        break;
-      case 3:
-        printf("%d ", tmp->cles[0]);
-        printf("%d ", tmp->cles[1]);
-        enfiler(f_fils, tmp->fils[0]);
-        enfiler(f_fils, tmp->fils[1]);
-        enfiler(f_fils, tmp->fils[2]);
-        break;
-      case 4:
-        printf("%d ", tmp->cles[0]);
-        printf("%d ", tmp->cles[1]);
-        printf("%d ", tmp->cles[2]);
-        enfiler(f_fils, tmp->fils[0]);
-        enfiler(f_fils, tmp->fils[1]);
-        enfiler(f_fils, tmp->fils[2]);
-        enfiler(f_fils, tmp->fils[3]);
-        break;
+  do {
+    while (!file_vide(f_act)) {
+      tmp = defiler(f_act);
+      switch (tmp->t) {
+        case 0:
+          break;
+        case 2:
+          printf("%d ", tmp->cles[1]);
+          enfiler(f_fils, tmp->fils[1]);
+          enfiler(f_fils, tmp->fils[2]);
+          break;
+        case 3:
+          printf("%d ", tmp->cles[0]);
+          printf("%d ", tmp->cles[1]);
+          enfiler(f_fils, tmp->fils[0]);
+          enfiler(f_fils, tmp->fils[1]);
+          enfiler(f_fils, tmp->fils[2]);
+          break;
+        case 4:
+          printf("%d ", tmp->cles[0]);
+          printf("%d ", tmp->cles[1]);
+          printf("%d ", tmp->cles[2]);
+          enfiler(f_fils, tmp->fils[0]);
+          enfiler(f_fils, tmp->fils[1]);
+          enfiler(f_fils, tmp->fils[2]);
+          enfiler(f_fils, tmp->fils[3]);
+          break;
+      }
     }
     f_act = f_fils;
     f_fils = creer_file();
-  }
+  } while (!file_vide(f_act));
+
   printf("\n");
   return ;
 }
