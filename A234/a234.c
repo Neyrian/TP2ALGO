@@ -260,7 +260,7 @@ void Affichage_Cles_Triees_Recursive (Arbre234 a)
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 {
-  if(a = null || a->t == 0){
+  if(a == NULL || a->t == 0){
     return;
   }
   ppile_t ATraiter = creer_pile();
@@ -291,10 +291,10 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
           empiler_int(NbPassage, 1);
           empiler(ATraiter, arbreTmp->fils[0]);
           empiler_int(NbPassage, 0);
-        } else if(tmp == 0){
-          printf("%d ", arbreTmp->cles[1]);
+        } else if(tmp == 1){
+          printf("%d ", arbreTmp->cles[0]);
           empiler(ATraiter, arbreTmp);
-          empiler_int(NbPassage, 1);
+          empiler_int(NbPassage, 2);
           empiler(ATraiter, arbreTmp->fils[1]);
           empiler_int(NbPassage, 0);
         } else {
@@ -303,8 +303,35 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
           empiler_int(NbPassage, 0);
         }
         break;
+      case 4:
+        if(tmp == 0){
+          empiler(ATraiter, arbreTmp);
+          empiler_int(NbPassage, 1);
+          empiler(ATraiter, arbreTmp->fils[0]);
+          empiler_int(NbPassage, 0);
+        } else if(tmp == 1){
+          printf("%d ", arbreTmp->cles[0]);
+          empiler(ATraiter, arbreTmp);
+          empiler_int(NbPassage, 2);
+          empiler(ATraiter, arbreTmp->fils[1]);
+          empiler_int(NbPassage, 0);
+        } else if(tmp == 2){
+          printf("%d ", arbreTmp->cles[1]);
+          empiler(ATraiter, arbreTmp);
+          empiler_int(NbPassage, 3);
+          empiler(ATraiter, arbreTmp->fils[2]);
+          empiler_int(NbPassage, 0);
+        } else {
+          printf("%d ", arbreTmp->cles[2]);
+          empiler(ATraiter, arbreTmp->fils[3]);
+          empiler_int(NbPassage, 0);
+        }
+        break;
+      default:
+        break;
     }
   }
+  printf("\n");
 
 }
 
