@@ -260,17 +260,16 @@ void Affichage_Cles_Triees_Recursive (Arbre234 a)
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 {
+  if(a = null || a->t == 0){
+    return;
+  }
   ppile_t ATraiter = creer_pile();
   empiler(ATraiter, a);
+  ppile_int AAfficher = creer_pile_int();
   Arbre234 arbreTmp;
   while (!pile_vide(ATraiter)) {
     arbreTmp = depiler(ATraiter);
-    if (arbreTmp != NULL) {
-      for (int i =; i < 4; i ++) {
-        empiler(ATraiter, arbreTmp->fils[i]);
-        empiler(ATraiter, arbreTmp);
-      }
-    }
+    if(AAfficher)
   }
 
 }
