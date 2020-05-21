@@ -38,4 +38,6 @@ void Afficher_Cles_Largeur (Arbre234 a);
 
 void Affichage_Cles_Triees_Recursive (Arbre234 a);
 
+void Affichage_Cles_Triees_NonRecursive (Arbre234 a);
+
 #endif

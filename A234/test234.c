@@ -74,7 +74,11 @@ int main(int argc, char** argv) {
   printf("Test de la fonction clef min\nResultat : %d, Resultat attendu : %d\n", CleMin(arbre_test), clefmin(argv[1]));
   printf("Test de la fonction clef max\nResultat : %d, Resultat attendu : %d\n", CleMax(arbre_test), clefmax(argv[1]));
 
+  printf("Test de la fonction Afficher_Cles_Largeur : \n");
   Afficher_Cles_Largeur (arbre_test);
+  printf("Test de la fonction Affihcage_Cles_Triees_Recursive :\n");
   Affichage_Cles_Triees_Recursive (arbre_test);
+  printf("Test de la fonction Affihcage_Cles_Triees_NonRecursive :\n");
+  Affichage_Cles_Triees_NonRecursive (arbre_test);
   return 0;
 }
