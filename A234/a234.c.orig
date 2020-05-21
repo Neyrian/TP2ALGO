@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "a234.h"
-#include "file.h"
 
 #define max(a,b) ((a)>(b)?(a):(b))
 
@@ -11,7 +10,7 @@
 int hauteur (Arbre234 a)
 {
   int h0, h1, h2, h3 ;
-
+  
   if (a == NULL)
     return 0 ;
 
@@ -24,7 +23,7 @@ int hauteur (Arbre234 a)
   h3 = hauteur (a->fils [3]) ;
 
   return 1 + max (max (h0,h1),max (h2,h3)) ;
-}
+} 
 
 int NombreCles (Arbre234 a)
 {
@@ -47,9 +46,10 @@ int NombreCles (Arbre234 a)
 
 int CleMax (Arbre234 a)
 {
-  if ((a == NULL) || (a->t == 0)){
+  if ((a == NULL) || (a->t == 0)) {
     return 0;
   }
+<<<<<<< HEAD
   switch(a->t){
     case 2:
     case 3:
@@ -63,7 +63,14 @@ int CleMax (Arbre234 a)
       }
       return CleMax(a->fils[3]);
   }   
-  return 0;
+=======
+  int index = a->t-1;
+  if (a->fils[index]->t != 0){
+    return CleMax(a->fils[index]);
+  } else {
+    return a->cles[index];
+  }
+>>>>>>> test
 }
 
 int CleMin (Arbre234 a)
@@ -71,20 +78,11 @@ int CleMin (Arbre234 a)
   if ((a == NULL) || (a->t == 0)){
     return 0;
   }
-  switch(a->t){
-    case 2:
-      if (a->fils[1]->t == 0) {
-          return a->cles[1];
-      }
-      return CleMin(a->fils[1]);
-    case 3:
-    case 4:
-      if (a->fils[0]->t == 0) {
-          return a->cles[0];
-      }
-      return CleMin(a->fils[0]);
-  }   
-  return 0;
+  if (a->fils[0]->t != 0){
+    return CleMin(a->fils[0]);
+  } else {
+    return a->cles[0];
+  }
 }
 
 Arbre234 RechercherCle (Arbre234 a, int cle)
@@ -93,31 +91,21 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
     return NULL;
   }
 
-  int i;
-
-  switch(a->t){
-    case 0:
-      return NULL;
-    case 2:
-      if(cle == a->cles[1]){
-        return a;
-      }
-      if(cle < a->cles[1]){
-        return RechercherCle(a->fils[1], cle);
-      }
-      return RechercherCle(a->fils[2], cle);
-    default:
-      for (i = 0; i<a->t-1;i++) {
-        int cle_act = a->cles[i];
-        if(cle_act == cle){
-          return a;
-        }
-        if(cle_act > cle){
-          return RechercherCle(a->fils[i], cle);
-        }
-      }
-      return RechercherCle(a->fils[i], cle);
+  if(a->t == 0){
+    return NULL;
   }
+
+  int i;
+  for (i = 0; i<a->t-1;i++) {
+    int cle_act = a->cles[i];
+    if(cle_act == cle){
+      return a;
+    }
+    if(cle_act < cle){
+      return RechercherCle(a->fils[i],cle);
+    }
+  }
+  return RechercherCle(a->fils[i],cle);
 }
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
@@ -150,6 +138,13 @@ void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3,
 
 Arbre234 noeud_max (Arbre234 a)
 {
+<<<<<<< HEAD
+  /*
+    Retourne le noeud avec la somme maximale des cles internes
+  */
+  
+  return NULL ;
+=======
   if(a == NULL){
     return NULL;
   }
@@ -178,61 +173,32 @@ Arbre234 noeud_max (Arbre234 a)
       break;
     }
   }
+>>>>>>> test
 }
 
 
 void Afficher_Cles_Largeur (Arbre234 a)
 {
-  pfile_t f_act = creer_file();
-  pfile_t f_fils = creer_file();
-  enfiler(f_act, a);
-  Arbre234 tmp;
-  while (!file_vide(f_act)) {
-    tmp = defiler(f_act);
-    switch (tmp->t) {
-      case 0:
-        break;
-      case 2:
-        printf("%d ", tmp->cles[1]);
-        enfiler(f_fils, tmp->fils[1]);
-        enfiler(f_fils, tmp->fils[2]);
-        break;
-      case 3:
-        printf("%d ", tmp->cles[0]);
-        printf("%d ", tmp->cles[1]);
-        enfiler(f_fils, tmp->fils[0]);
-        enfiler(f_fils, tmp->fils[1]);
-        enfiler(f_fils, tmp->fils[2]);
-        break;
-      case 4:
-        printf("%d ", tmp->cles[0]);
-        printf("%d ", tmp->cles[1]);
-        printf("%d ", tmp->cles[2]);
-        enfiler(f_fils, tmp->fils[0]);
-        enfiler(f_fils, tmp->fils[1]);
-        enfiler(f_fils, tmp->fils[2]);
-        enfiler(f_fils, tmp->fils[3]);
-        break;
-    }
-    f_act = f_fils;
-    f_fils = creer_file();
-  }
-  printf("\n");
+  /*
+    Afficher le cles de l'arbre a avec
+    un parcours en largeur
+  */
+
   return ;
 }
 
 void Affichage_Cles_Triees_Recursive (Arbre234 a)
 {
-  /*
+  /* 
      Afficher les cles en ordre croissant
      Cette fonction sera recursive
   */
-
+     
 }
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 {
-    /*
+    /* 
      Afficher les cles en ordre croissant
      Cette fonction ne sera pas recursive
      Utiliser une pile
