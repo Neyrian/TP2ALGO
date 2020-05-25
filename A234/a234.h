@@ -40,4 +40,6 @@ void Affichage_Cles_Triees_Recursive (Arbre234 a);
 
 void Affichage_Cles_Triees_NonRecursive (Arbre234 a);
 
+void Detruire_Cle (Arbre234 *a, int cle);
+
 #endif

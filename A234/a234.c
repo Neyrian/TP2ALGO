@@ -335,12 +335,299 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 
 }
 
+void Retirer_Cle(Arbre234 a, int cle){
+  switch(a->t){
+    case 3:
+      for(int i = 0; i<2; i++){
+        if(a->cles[i] == cle){
+          a->cles[i] = a->cles[i+1];
+          cle = a->cles[i];
+        }
+      }
+      a->cles[2] = a->cles[1];
+      a->cles[1] = a->cles[0];
+      a->t = 2;
+      return;
+    case 4:
+      for(int i = 0; i<3; i++){
+        if(a->cles[i] == cle){
+          a->cles[i] = a->cles[i+1];
+          cle = a->cles[i];
+        }
+      }
+      a->t = 3;
+      return;
+  }
+}
+
+Arbre234 Rechercher_Voisin(Arbre234 a, Arbre234 parent){
+  switch(parent->t){
+    case 2:
+      if(parent->fils[1] == a){
+        return parent->fils[2];
+      } else {
+        return parent->fils[1];
+      }
+    case 3:
+      for(int i = 0; i<2; i++){
+        if(parent->fils[i] == a){
+          return parent->fils[i+1];
+        }
+      }
+      return parent->fils[1];
+    case 4:
+      for(int i = 0; i<3; i++){
+        if(parent->fils[i] == a){
+          return parent->fils[i+1];
+        }
+      }
+      return parent->fils[2];
+  }
+  return NULL;
+}
+
+void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
+  Arbre234 Voisin;
+  int tmp;
+  int tmp_voisin;
+  int tmp_parent;
+  switch(a->t){
+    case 2:
+      Voisin = Rechercher_Voisin(a, parent);
+      switch(parent->t){
+        case 2:
+          if(Voisin->cles[0] > a->cles[1]){
+            tmp = Voisin->cles[0];
+            Retirer_Cle(Voisin, tmp);
+            tmp_parent = parent->cles[1];
+            parent->cles[1] = tmp;
+            a->cles[1] = tmp_parent;
+          } else {
+              tmp = Voisin->cles[Voisin->t-2];
+              Retirer_Cle(Voisin, tmp);
+              tmp_parent = parent->cles[1];
+              parent->cles[1] = tmp;
+              a->cles[1] = tmp_parent;
+          }
+          return;
+        case 3:
+          switch(Voisin->t){
+            case 2:
+              if (parent->fils[0] == a || parent->fils[0] == Voisin){
+                tmp = parent->cles[0];
+                parent->t = 2;
+              } else {
+                tmp = parent->cles[1];
+                parent->cles[1] = parent->cles[0];
+                parent->t = 2;
+              }
+                if(a->cles[1]<tmp){
+                  Voisin->cles[0] = tmp;
+                  Voisin->t = 3;
+                } else {
+                  Voisin->cles[0] = Voisin->cles[1];
+                  Voisin->cles[1] = tmp;
+                  Voisin->t = 3;
+                }
+              return;
+            case 3:
+              for(int i = 0; i<3; i++){
+                if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                  tmp = parent->cles[i];
+                  if (a->cles[1] < tmp){
+                    tmp_voisin = Voisin->cles[0];
+                    Voisin->t = 2;
+                  } else {
+                    tmp_voisin = Voisin->cles[1];
+                    Voisin->cles[1] = Voisin->cles[0];
+                    Voisin->t = 2;
+                  }
+                  parent->cles[i] = tmp_voisin;
+                  a->cles[1] = tmp;
+                  return;
+                }
+              }
+              return;
+            //Les cas restant sont à corriger (Enlever les ajouter_cle...)
+            case 4:
+              for(int i = 0; i<3; i++){
+                if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                  tmp = parent->cles[i];
+                  Retirer_Cle(parent, tmp);
+                  if (a->cles[1] < tmp){
+                    tmp_voisin = Voisin->cles[0];
+                  } else {
+                    tmp_voisin = Voisin->cles[2];
+                  }
+                  Retirer_Cle(Voisin, tmp_voisin);
+                  ajouter_cle(&parent,tmp_voisin, 0, parent);
+                  ajouter_cle(&a,tmp , 0, parent);
+                  Retirer_Cle(a, cle);
+                }
+              }
+            }
+            return;
+          case 4:
+            switch(Voisin->t){
+              case 2:
+                for(int i = 0; i<4; i++){
+                  if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                    tmp = parent->cles[i];
+                    Retirer_Cle(parent, tmp);
+                    if(a->cles[1]<tmp){
+                      ajouter_cle(&a, tmp, 0, parent);
+                      ajouter_cle(&a, Voisin->cles[1], 0, parent);
+                    } else {
+                        ajouter_cle(&Voisin, tmp, 0, parent);
+                        ajouter_cle(&Voisin, a->cles[1], 0, parent);
+                    }
+                    Retirer_Cle(a, cle);
+                  }
+                }
+                return;
+              case 3:
+                for(int i = 0; i<4; i++){
+                  if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                    tmp = parent->cles[i];
+                    Retirer_Cle(parent, tmp);
+                    if (a->cles[1] < tmp){
+                      tmp_voisin = Voisin->cles[0];
+                    } else {
+                      tmp_voisin = Voisin->cles[1];
+                    }
+                    Retirer_Cle(Voisin, tmp_voisin);
+                    ajouter_cle(&parent,tmp_voisin, 0, parent);
+                    ajouter_cle(&a,tmp, 0, parent);
+                    Retirer_Cle(a, cle);
+                  }
+                }
+                return;
+              case 4:
+                for(int i = 0; i<4; i++){
+                  if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                    tmp = parent->cles[i];
+                    Retirer_Cle(parent, tmp);
+                    if (a->cles[1] < tmp){
+                      tmp_voisin = Voisin->cles[0];
+                    } else {
+                      tmp_voisin = Voisin->cles[2];
+                    }
+                    Retirer_Cle(Voisin, tmp_voisin);
+                    ajouter_cle(&parent,tmp_voisin, 0, parent);
+                    ajouter_cle(&a,tmp, 0, parent);
+                    Retirer_Cle(a, cle);
+                  }
+                }
+                return;
+            }
+      }
+    case 3:
+    case 4:
+      Retirer_Cle(a, cle);
+      return;
+  }
+}
+
+void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
+  return;
+}
+
+void Detruire_Cle_Rec (Arbre234 a, Arbre234 parent, int cle)
+{
+  {
+    if(a == NULL){
+      return;
+    }
+
+    int i;
+
+    switch(a->t){
+      case 0:
+        return;
+      case 2:
+        if(cle == a->cles[1]){
+          if (a->fils[1]->t == 0){
+            Detruire_Cle_Noeud_Feuille(a, parent, cle);
+          } else {
+              Detruire_Cle_Noeud_Pas_Feuille(a, cle);
+          }
+          return;
+        }
+        if(cle < a->cles[1]){
+          Detruire_Cle_Rec(a->fils[1], a, cle);
+          return;
+        } else {
+          Detruire_Cle_Rec(a->fils[2], a, cle);
+          return;
+        }
+      case 3:
+        for (i = 0; i<a->t-1;i++) {
+          int cle_act = a->cles[i];
+          if(cle_act == cle){
+            if (a->fils[1]->t == 0){
+              Detruire_Cle_Noeud_Feuille(a, parent, cle);
+            } else {
+              Detruire_Cle_Noeud_Pas_Feuille(a, cle);
+            }
+            return;
+          }
+          if(cle_act > cle){
+            Detruire_Cle_Rec(a->fils[i], a, cle);
+            return;
+          }
+        }
+        Detruire_Cle_Rec(a->fils[2], a, cle);
+        return;
+      case 4:
+        for (i = 0; i<a->t-1;i++) {
+          int cle_act = a->cles[i];
+          if(cle_act == cle){
+            if (a->fils[1]->t == 0){
+              Detruire_Cle_Noeud_Feuille(a, parent, cle);
+            } else {
+                Detruire_Cle_Noeud_Pas_Feuille(a, cle);
+            }
+            return;
+          }
+          if(cle_act > cle){
+            Detruire_Cle_Rec(a->fils[i], a, cle);
+            return;
+          }
+        }
+        Detruire_Cle_Rec(a->fils[3], a, cle);
+        return;
+    }
+  }
+  return ;
+}
 
 void Detruire_Cle (Arbre234 *a, int cle)
 {
-  /*
-    retirer la cle de l'arbre a
-  */
+  switch((*a)->t){
+    case 0:
+      return;
+    case 2:
+      if((*a)->cles[1]<cle){
+        Detruire_Cle_Rec ((*a)->fils[2], (*a), cle);
+      } else {
+        Detruire_Cle_Rec ((*a)->fils[1], (*a), cle);
+      }
+      return;
+    case 3:
+      for(int i = 0; i<3; i++){
+        if((*a)->cles[i] < cle){
+          Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+        }
+      }
+      return;
+    case 4:
+      for(int i = 0; i<4; i++){
+        if((*a)->cles[i] < cle){
+          Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+        }
+      }
+      return;
+  }
 
   return ;
 }

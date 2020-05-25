@@ -87,5 +87,16 @@ int main(int argc, char** argv) {
   int noeud4 = 0;
   AnalyseStructureArbre(arbre_test, &feuilles, &noeud2, &noeud3, &noeud4);
   printf("Test de la fonction AnanlyseStructureArbre\nResultat : nb feuilles = %d, nb 2-noeuds = %d nb 3-noeud = %d nb 4-noeud = %d\n", feuilles, noeud2, noeud3, noeud4);
+
+  printf("Test de la fonction detruire clef");
+  clef_ask = 0;
+  while (clef_ask != -1) {
+    printf ("==== Afficher arbre ====\n") ;
+    afficher_arbre (arbre_test, 0) ;
+    printf("Entrez clef a supprimer (-1 pour quiter) : ");
+    scanf("%d", &clef_ask);
+    Detruire_Cle(&arbre_test, clef_ask);
+  }
+
   return 0;
 }
