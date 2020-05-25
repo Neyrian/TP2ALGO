@@ -123,28 +123,28 @@ Arbre234 RechercherCle (Arbre234 a, int cle)
 
 void AnalyseStructureArbre (Arbre234 a, int *feuilles, int *noeud2, int *noeud3, int *noeud4)
 {
-  if (a == NULL){
+  if (a == NULL || a->t == 0){
     return;
   }
   switch(a->t){
-    case 0:
-      feuilles[0]++;
-      return;
     case 2:
-      noeud2[0]++;
+      (*noeud2)++;
       break;
     case 3:
-      noeud3[0]++;
+      (*noeud3)++;
       break;
     case 4:
-      noeud4[0]++;
+      (*noeud4)++;
       break;
   }
+  if (a->fils != NULL && a->fils[1]->t == 0) {
+    (*feuilles) += a->t;
+    return;
+  }
+
   if (a->fils != NULL) {
     for (int i = 0; i < 4; i++){
-      if (a->fils[i] != NULL){
         AnalyseStructureArbre(a->fils[i], feuilles, noeud2, noeud3, noeud4);
-      }
     }
   }
 }

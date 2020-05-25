@@ -80,5 +80,12 @@ int main(int argc, char** argv) {
   Affichage_Cles_Triees_Recursive (arbre_test);
   printf("Test de la fonction Affihcage_Cles_Triees_NonRecursive :\n");
   Affichage_Cles_Triees_NonRecursive (arbre_test);
+
+  int feuilles = 0;
+  int noeud2 = 0;
+  int noeud3 = 0;
+  int noeud4 = 0;
+  AnalyseStructureArbre(arbre_test, &feuilles, &noeud2, &noeud3, &noeud4);
+  printf("Test de la fonction AnanlyseStructureArbre\nResultat : nb feuilles = %d, nb 2-noeuds = %d nb 3-noeud = %d nb 4-noeud = %d\n", feuilles, noeud2, noeud3, noeud4);
   return 0;
 }
