@@ -181,7 +181,6 @@ Arbre234 noeud_max (Arbre234 a)
   }
 }
 
-
 void Afficher_Cles_Largeur (Arbre234 a)
 {
   pfile_t f_act = creer_file();
@@ -335,6 +334,7 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 
 }
 
+
 void Retirer_Cle(Arbre234 a, int cle){
   switch(a->t){
     case 3:
@@ -403,11 +403,11 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
             parent->cles[1] = tmp;
             a->cles[1] = tmp_parent;
           } else {
-              tmp = Voisin->cles[Voisin->t-2];
-              Retirer_Cle(Voisin, tmp);
-              tmp_parent = parent->cles[1];
-              parent->cles[1] = tmp;
-              a->cles[1] = tmp_parent;
+            tmp = Voisin->cles[Voisin->t-2];
+            Retirer_Cle(Voisin, tmp);
+            tmp_parent = parent->cles[1];
+            parent->cles[1] = tmp;
+            a->cles[1] = tmp_parent;
           }
           return;
         case 3:
@@ -538,18 +538,19 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
 }
 
 void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
+  int newVal;
+  switch (a->t) {
+    case 2:
+    newVal;
+  }
   return;
 }
 
-void Detruire_Cle_Rec (Arbre234 a, Arbre234 parent, int cle)
-{
-  {
+void Detruire_Cle_Rec (Arbre234 a, Arbre234 parent, int cle){
     if(a == NULL){
       return;
     }
-
     int i;
-
     switch(a->t){
       case 0:
         return;
@@ -606,7 +607,6 @@ void Detruire_Cle_Rec (Arbre234 a, Arbre234 parent, int cle)
         Detruire_Cle_Rec(a->fils[3], a, cle);
         return;
     }
-  }
   return ;
 }
 
@@ -623,18 +623,22 @@ void Detruire_Cle (Arbre234 *a, int cle)
       }
       return;
     case 3:
-      for(int i = 0; i<3; i++){
-        if((*a)->cles[i] < cle){
+      for(int i = 0; i<2; i++){
+        if((*a)->cles[i] > cle){
           Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+          return;
         }
       }
+      Detruire_Cle_Rec((*a)->fils[2], (*a), cle);
       return;
     case 4:
-      for(int i = 0; i<4; i++){
-        if((*a)->cles[i] < cle){
+      for(int i = 0; i<3; i++){
+        if((*a)->cles[i] > cle){
           Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+          return;
         }
       }
+      Detruire_Cle_Rec((*a)->fils[3], (*a), cle);
       return;
   }
 
