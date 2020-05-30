@@ -396,7 +396,7 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
       Voisin = Rechercher_Voisin(a, parent);
       switch(parent->t){
         case 2:
-          if(Voisin->cles[0] > a->cles[1]){
+         if(Voisin->cles[0] > a->cles[1]){
             tmp = Voisin->cles[0];
             Retirer_Cle(Voisin, tmp);
             tmp_parent = parent->cles[1];
@@ -421,14 +421,14 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
                 parent->cles[1] = parent->cles[0];
                 parent->t = 2;
               }
-                if(a->cles[1]<tmp){
-                  Voisin->cles[0] = tmp;
-                  Voisin->t = 3;
-                } else {
-                  Voisin->cles[0] = Voisin->cles[1];
-                  Voisin->cles[1] = tmp;
-                  Voisin->t = 3;
-                }
+              if(a->cles[1]<tmp){
+                Voisin->cles[0] = tmp;
+                Voisin->t = 3;
+              } else {
+                Voisin->cles[0] = Voisin->cles[1];
+                Voisin->cles[1] = tmp;
+                Voisin->t = 3;
+              }
               return;
             case 3:
               for(int i = 0; i<3; i++){
@@ -682,6 +682,7 @@ void fusion2noeud(Arbre234 a) {
   tmp = a->fils[2];
   a->fils[2] = tmp->fils[1];
   a->fils[3] = tmp->fils[2];
+  a->t = 4;
 }
 
 void Equilibrage(Arbre234 a, Arbre234 racine) {
