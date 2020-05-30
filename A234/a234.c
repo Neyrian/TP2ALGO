@@ -621,7 +621,7 @@ void Detruire_Cle_Rec (Arbre234 a, Arbre234 parent, int cle){
           if (a->fils[1]->t == 0){
             Detruire_Cle_Noeud_Feuille(a, parent, cle);
           } else {
-              Detruire_Cle_Noeud_Pas_Feuille(a, cle);
+            Detruire_Cle_Noeud_Pas_Feuille(a, cle);
           }
           return;
         }
@@ -672,6 +672,141 @@ void Detruire_Cle_Rec (Arbre234 a, Arbre234 parent, int cle){
   return ;
 }
 
+void fusion2noeud(Arbre234 a) {
+  a->cles[0] = a->fils[1]->cles[1];
+  a->cles[2] = a->fils[2]->cles[1];
+  Arbre234 tmp;
+  tmp = a->fils[1];
+  a->fils[0] = tmp->fils[1];
+  a->fils[1] = tmp->fils[2];
+  tmp = a->fils[2];
+  a->fils[2] = tmp->fils[1];
+  a->fils[3] = tmp->fils[2];
+}
+
+void Equilibrage(Arbre234 a, Arbre234 racine) {
+  int newVal;
+  Arbre234 newArbre;
+  Arbre234 newArbre2;
+  switch (a->t) {
+    case 2:
+      if (a->fils[1]->t != 0) {
+        if (a->fils[1]->t == 2 && a->fils[2]->t == 2) {
+          fusion2noeud(a);
+          Equilibrage(racine, racine);
+          return;
+        } else if (hauteur(a->fils[1]) == hauteur(a->fils[2])) {
+          Equilibrage(a->fils[1], racine);
+          Equilibrage(a->fils[2], racine);
+        } else {
+          if (hauteur(a->fils[1]) < hauteur(a->fils[2])) {
+            newVal = CleMin(a->fils[2]);
+            newArbre = NULL;
+            ajouter_cle(&newArbre, a->fils[1]->cles[0], 0,NULL);
+            ajouter_cle(&newArbre, a->fils[1]->cles[1], 0, NULL);
+            a->fils[1]->cles[1] = a->fils[1]->cles[2];
+            a->fils[1]->fils[1] = newArbre;
+            newArbre2 = NULL;
+            ajouter_cle(&newArbre2, a->cles[1], 0, NULL);
+            a->fils[1]->fils[2] = newArbre2;
+            a->cles[1] = newVal;
+            a->fils[1]->t = 2;
+            Detruire_Cle(&(a->fils[2]), newVal);
+          } else {
+            newVal = CleMax(a->fils[1]);
+            newArbre = NULL;
+            ajouter_cle(&newArbre, a->cles[1], 0,NULL);
+            ajouter_cle(&newArbre, a->fils[2]->cles[0], 0,NULL);
+            a->fils[2]->fils[1] = newArbre;
+            newArbre2 = NULL;
+            ajouter_cle(&newArbre2, a->fils[2]->cles[2], 0,NULL);
+            a->fils[2]->fils[2] = newArbre2;
+            a->cles[1] = newVal;
+            a->fils[2]->t = 2;
+            Detruire_Cle(&(a->fils[1]), newVal);
+          }
+        }
+      }
+      return;
+    case 3:
+      if (a->fils[1]->t != 0) {
+        if ((hauteur(a->fils[1]) == hauteur(a->fils[2])) && (hauteur(a->fils[0]) == hauteur(a->fils[2]))) {
+          Equilibrage(a->fils[0], racine);
+          Equilibrage(a->fils[1], racine);
+          Equilibrage(a->fils[2], racine);
+        } else {
+          for (int i = 0; i < 2; i ++) {
+            if (hauteur(a->fils[i]) < hauteur(a->fils[i+1])) {
+              newVal = CleMin(a->fils[i+1]);
+              newArbre = NULL;
+              ajouter_cle(&newArbre, a->fils[i]->cles[0],0, NULL);
+              ajouter_cle(&newArbre, a->fils[i]->cles[1], 0,NULL);
+              a->fils[i]->cles[1] = a->fils[i]->cles[2];
+              a->fils[i]->fils[1] = newArbre;
+              newArbre2 = NULL;
+              ajouter_cle(&newArbre2, a->cles[0], 0,NULL);
+              a->fils[i]->fils[2] = newArbre2;
+              a->cles[0] = newVal;
+              a->fils[i]->t = 2;
+              Detruire_Cle(&(a->fils[i+1]), newVal);
+              return;
+            }
+          }
+          newVal = CleMax(a->fils[1]);
+          newArbre = NULL;
+          ajouter_cle(&newArbre, a->cles[1], 0,NULL);
+          a->fils[2]->fils[1] = newArbre;
+          newArbre2 = NULL;
+          ajouter_cle(&newArbre2, a->fils[2]->cles[1], 0,NULL);
+          ajouter_cle(&newArbre2, a->fils[2]->cles[2], 0,NULL);
+          a->fils[2]->fils[2] = newArbre2;
+          a->cles[1] = newVal;
+          a->fils[2]->t = 2;
+          Detruire_Cle(&(a->fils[1]), newVal);
+        }
+      }
+      return;
+    case 4:
+      if (a->fils[1]->t != 0) {
+        if ((hauteur(a->fils[1]) == hauteur(a->fils[2])) && (hauteur(a->fils[0]) == hauteur(a->fils[2])) && (hauteur(a->fils[0]) == hauteur(a->fils[3]))) {
+          Equilibrage(a->fils[0], racine);
+          Equilibrage(a->fils[1], racine);
+          Equilibrage(a->fils[2], racine);
+          Equilibrage(a->fils[3], racine);
+        } else {
+          for (int i = 0; i < 3; i ++) {
+            if (hauteur(a->fils[i]) < hauteur(a->fils[i+1])) {
+              newVal = CleMin(a->fils[i+1]);
+              newArbre = NULL;
+              ajouter_cle(&newArbre, a->fils[i]->cles[0], 0,NULL);
+              ajouter_cle(&newArbre, a->fils[i]->cles[1], 0,NULL);
+              a->fils[i]->cles[1] = a->fils[i]->cles[2];
+              a->fils[i]->fils[1] = newArbre;
+              newArbre2 = NULL;
+              ajouter_cle(&newArbre2, a->cles[0], 0,NULL);
+              a->fils[i]->fils[2] = newArbre2;
+              a->cles[0] = newVal;
+              a->fils[i]->t = 2;
+              Detruire_Cle(&(a->fils[i+1]), newVal);
+              return;
+            }
+          }
+          newVal = CleMax(a->fils[2]);
+          newArbre = NULL;
+          ajouter_cle(&newArbre, a->cles[1], 0,NULL);
+          a->fils[3]->fils[1] = newArbre;
+          newArbre2 = NULL;
+          ajouter_cle(&newArbre2, a->fils[3]->cles[1], 0,NULL);
+          ajouter_cle(&newArbre2, a->fils[3]->cles[2], 0,NULL);
+          a->fils[3]->fils[2] = newArbre2;
+          a->cles[1] = newVal;
+          a->fils[3]->t = 2;
+          Detruire_Cle(&(a->fils[2]), newVal);
+        }
+      }
+      return;
+  }
+}
 void Detruire_Cle (Arbre234 *a, int cle)
 {
   switch((*a)->t){
@@ -685,32 +820,38 @@ void Detruire_Cle (Arbre234 *a, int cle)
       } else {
         Detruire_Cle_Rec ((*a), NULL, cle);
       }
+      Equilibrage((*a), (*a));
       return;
     case 3:
       for(int i = 0; i<2; i++){
         if ((*a)->cles[i] > cle){
           Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+          Equilibrage((*a), (*a));
           return;
         } else if ((*a)->cles[i] == cle) {
           Detruire_Cle_Rec ((*a), NULL, cle);
+          Equilibrage((*a), (*a));
           return;
         }
       }
       Detruire_Cle_Rec((*a)->fils[2], (*a), cle);
+      Equilibrage((*a), (*a));
       return;
     case 4:
       for(int i = 0; i<3; i++){
         if((*a)->cles[i] > cle){
           Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+          Equilibrage((*a), (*a));
           return;
         }else if ((*a)->cles[i] == cle) {
           Detruire_Cle_Rec ((*a), NULL, cle);
+          Equilibrage((*a), (*a));
           return;
         }
       }
       Detruire_Cle_Rec((*a)->fils[3], (*a), cle);
+      Equilibrage((*a), (*a));
       return;
   }
-
   return ;
 }
