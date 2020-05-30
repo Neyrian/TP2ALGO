@@ -539,9 +539,71 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
 
 void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
   int newVal;
+  int indice_fils;
   switch (a->t) {
     case 2:
-    newVal;
+      switch (a->fils[2]->t) {
+        case 2:
+          newVal = a->fils[2]->cles[1];
+          break;
+        case 3:
+        case 4:
+          newVal = a->fils[2]->cles[0];
+          break;
+      }
+      a->cles[1] = newVal;
+      if (a->fils[2]->fils[1]->t != 0) {
+        Detruire_Cle_Noeud_Pas_Feuille(a->fils[2], newVal);
+      } else {
+        Detruire_Cle_Noeud_Feuille(a->fils[2], a, newVal);
+      }
+      return;
+    case 3:
+      if (a->cles[0] == cle) {
+        indice_fils = 1;
+      } else {
+        indice_fils = 2;
+      }
+      switch (a->fils[indice_fils]->t) {
+        case 2:
+          newVal = a->fils[indice_fils]->cles[1];
+          break;
+        case 3:
+        case 4:
+          newVal = a->fils[indice_fils]->cles[0];
+          break;
+      }
+      a->cles[indice_fils - 1] = newVal;
+      if (a->fils[indice_fils]->fils[1]->t != 0) {
+        Detruire_Cle_Noeud_Pas_Feuille(a->fils[indice_fils], newVal);
+      } else {
+        Detruire_Cle_Noeud_Feuille(a->fils[indice_fils], a, newVal);
+      }
+      return;
+    case 4:
+      if (a->cles[0] == cle) {
+        indice_fils = 1;
+      } else if (a->cles[1] == cle){
+        indice_fils = 2;
+      } else {
+        indice_fils = 3;
+      }
+      switch (a->fils[indice_fils]->t) {
+        case 2:
+          newVal = a->fils[indice_fils]->cles[1];
+          break;
+        case 3:
+        case 4:
+          newVal = a->fils[indice_fils]->cles[0];
+          break;
+      }
+      a->cles[indice_fils - 1] = newVal;
+      if (a->fils[indice_fils]->fils[1]->t != 0) {
+        Detruire_Cle_Noeud_Pas_Feuille(a->fils[indice_fils], newVal);
+      } else {
+        Detruire_Cle_Noeud_Feuille(a->fils[indice_fils], a, newVal);
+      }
+      return;
   }
   return;
 }
@@ -616,16 +678,21 @@ void Detruire_Cle (Arbre234 *a, int cle)
     case 0:
       return;
     case 2:
-      if((*a)->cles[1]<cle){
+      if ((*a)->cles[1]<cle){
         Detruire_Cle_Rec ((*a)->fils[2], (*a), cle);
-      } else {
+      } else if ((*a)->cles[1] > cle){
         Detruire_Cle_Rec ((*a)->fils[1], (*a), cle);
+      } else {
+        Detruire_Cle_Rec ((*a), NULL, cle);
       }
       return;
     case 3:
       for(int i = 0; i<2; i++){
-        if((*a)->cles[i] > cle){
+        if ((*a)->cles[i] > cle){
           Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+          return;
+        } else if ((*a)->cles[i] == cle) {
+          Detruire_Cle_Rec ((*a), NULL, cle);
           return;
         }
       }
@@ -635,6 +702,9 @@ void Detruire_Cle (Arbre234 *a, int cle)
       for(int i = 0; i<3; i++){
         if((*a)->cles[i] > cle){
           Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
+          return;
+        }else if ((*a)->cles[i] == cle) {
+          Detruire_Cle_Rec ((*a), NULL, cle);
           return;
         }
       }
