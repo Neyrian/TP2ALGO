@@ -542,21 +542,9 @@ void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
   int indice_fils;
   switch (a->t) {
     case 2:
-      switch (a->fils[2]->t) {
-        case 2:
-          newVal = a->fils[2]->cles[1];
-          break;
-        case 3:
-        case 4:
-          newVal = a->fils[2]->cles[0];
-          break;
-      }
+      newVal = CleMin(a->fils[2]);
       a->cles[1] = newVal;
-      if (a->fils[2]->fils[1]->t != 0) {
-        Detruire_Cle_Noeud_Pas_Feuille(a->fils[2], newVal);
-      } else {
-        Detruire_Cle_Noeud_Feuille(a->fils[2], a, newVal);
-      }
+      Detruire_Cle(&(a->fils[2]), newVal);
       return;
     case 3:
       if (a->cles[0] == cle) {
@@ -564,21 +552,9 @@ void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
       } else {
         indice_fils = 2;
       }
-      switch (a->fils[indice_fils]->t) {
-        case 2:
-          newVal = a->fils[indice_fils]->cles[1];
-          break;
-        case 3:
-        case 4:
-          newVal = a->fils[indice_fils]->cles[0];
-          break;
-      }
+      newVal = CleMin(a->fils[indice_fils]);
       a->cles[indice_fils - 1] = newVal;
-      if (a->fils[indice_fils]->fils[1]->t != 0) {
-        Detruire_Cle_Noeud_Pas_Feuille(a->fils[indice_fils], newVal);
-      } else {
-        Detruire_Cle_Noeud_Feuille(a->fils[indice_fils], a, newVal);
-      }
+      Detruire_Cle(&(a->fils[indice_fils]), newVal);
       return;
     case 4:
       if (a->cles[0] == cle) {
@@ -588,21 +564,9 @@ void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
       } else {
         indice_fils = 3;
       }
-      switch (a->fils[indice_fils]->t) {
-        case 2:
-          newVal = a->fils[indice_fils]->cles[1];
-          break;
-        case 3:
-        case 4:
-          newVal = a->fils[indice_fils]->cles[0];
-          break;
-      }
+      newVal = CleMin(a->fils[indice_fils]);
       a->cles[indice_fils - 1] = newVal;
-      if (a->fils[indice_fils]->fils[1]->t != 0) {
-        Detruire_Cle_Noeud_Pas_Feuille(a->fils[indice_fils], newVal);
-      } else {
-        Detruire_Cle_Noeud_Feuille(a->fils[indice_fils], a, newVal);
-      }
+      Detruire_Cle(&(a->fils[indice_fils]), newVal);
       return;
   }
   return;
@@ -807,6 +771,7 @@ void Equilibrage(Arbre234 a, Arbre234 racine) {
       }
       return;
   }
+
 }
 void Detruire_Cle (Arbre234 *a, int cle)
 {
@@ -819,7 +784,7 @@ void Detruire_Cle (Arbre234 *a, int cle)
       } else if ((*a)->cles[1] > cle){
         Detruire_Cle_Rec ((*a)->fils[1], (*a), cle);
       } else {
-        Detruire_Cle_Rec ((*a), NULL, cle);
+        Detruire_Cle_Rec ((*a), (*a), cle);
       }
       Equilibrage((*a), (*a));
       return;
@@ -830,7 +795,7 @@ void Detruire_Cle (Arbre234 *a, int cle)
           Equilibrage((*a), (*a));
           return;
         } else if ((*a)->cles[i] == cle) {
-          Detruire_Cle_Rec ((*a), NULL, cle);
+          Detruire_Cle_Rec ((*a), (*a), cle);
           Equilibrage((*a), (*a));
           return;
         }
@@ -845,7 +810,7 @@ void Detruire_Cle (Arbre234 *a, int cle)
           Equilibrage((*a), (*a));
           return;
         }else if ((*a)->cles[i] == cle) {
-          Detruire_Cle_Rec ((*a), NULL, cle);
+          Detruire_Cle_Rec ((*a), (*a), cle);
           Equilibrage((*a), (*a));
           return;
         }
