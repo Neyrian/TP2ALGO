@@ -355,13 +355,16 @@ void Retirer_Cle(Arbre234 a, int cle){
       return;
     case 4:
       for(int i = 0; i<3; i++){
+        printf("%d %d\n",i, cle );
         if(a->cles[i] == cle){
           a->cles[i] = a->cles[i+1];
           cle = a->cles[i];
+
           if (i == 2) {
             a->fils[2] = a->fils[3];
           } else if (i == 1) {
             a->fils[1] = a->fils[2];
+            a->fils[2] = a->fils[3];
           }
         }
       }
@@ -477,68 +480,78 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
                 }
               }
             }
-          case 4:
-            switch(Voisin->t){
-              case 2:
-                if (parent->fils[0] == a || parent->fils[0] == Voisin){
-                  tmp = parent->cles[0];
-                  parent->cles[0] = parent->cles[1];
-                  parent->cles[1] = parent->cles[2];
-                  parent->t = 3;
-                } else if (parent->fils[1] == a || parent->fils[1] == Voisin){
-                  tmp = parent->cles[1];
-                  parent->cles[1] = parent->cles[2];
-                  parent->t = 3;
-                } else {
-                  tmp = parent->cles[2];
-                  parent->t = 3;
+        case 4:
+          switch(Voisin->t){
+            case 2:
+              if (parent->fils[0] == a || parent->fils[0] == Voisin){
+                tmp = parent->cles[0];
+                parent->cles[0] = parent->cles[1];
+                parent->cles[1] = parent->cles[2];
+                parent->t = 3;
+
+              } else if (parent->fils[1] == a || parent->fils[1] == Voisin){
+                tmp = parent->cles[1];
+                parent->cles[1] = parent->cles[2];
+                parent->t = 3;
+              } else {
+                tmp = parent->cles[2];
+                parent->t = 3;
+              }
+              if(a->cles[1]<tmp){
+                Voisin->cles[0] = tmp;
+                Voisin->t = 3;
+              } else {
+                Voisin->cles[0] = Voisin->cles[1];
+                Voisin->cles[1] = tmp;
+                Voisin->t = 3;
+              }
+              int changed = 0;
+              for (int i = 0; i < 4; i ++) {
+                if (parent->fils[i] == a) {
+                  changed = 1;
                 }
-                  if(a->cles[1]<tmp){
-                    Voisin->cles[0] = tmp;
-                    Voisin->t = 3;
-                  } else {
-                    Voisin->cles[0] = Voisin->cles[1];
-                    Voisin->cles[1] = tmp;
-                    Voisin->t = 3;
-                  }
-                return;
-              case 3:
-                for(int i = 0; i<3; i++){
-                  if (parent->fils[i] == a || parent->fils[i] == Voisin){
-                    tmp = parent->cles[i];
-                    if (a->cles[1] < tmp){
-                      tmp_voisin = Voisin->cles[0];
-                      Voisin->t = 2;
-                    } else {
-                      tmp_voisin = Voisin->cles[1];
-                      Voisin->cles[1] = Voisin->cles[0];
-                      Voisin->t = 2;
-                    }
-                    parent->cles[i] = tmp_voisin;
-                    a->cles[1] = tmp;
-                    return;
-                  }
-                }
-                return;
-              case 4:
-                for(int i = 0; i<3; i++){
-                  if (parent->fils[i] == a || parent->fils[i] == Voisin){
-                    tmp = parent->cles[i];
-                    if (a->cles[1] < tmp){
-                      tmp_voisin = Voisin->cles[0];
-                      Voisin->cles[0] = Voisin->cles[1];
-                      Voisin->cles[1] = Voisin->cles[2];
-                      Voisin->t = 3;
-                    } else {
-                      tmp_voisin = Voisin->cles[2];
-                      Voisin->t = 3;
-                    }
-                    parent->cles[i] = tmp_voisin;
-                    a->cles[1] = tmp;
-                    return;
-                  }
+                if (changed) {
+                  parent->fils[i] = parent->fils[i+1];
                 }
               }
+              return;
+            case 3:
+              for(int i = 0; i<3; i++){
+                if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                  tmp = parent->cles[i];
+                  if (a->cles[1] < tmp){
+                    tmp_voisin = Voisin->cles[0];
+                    Voisin->t = 2;
+                  } else {
+                    tmp_voisin = Voisin->cles[1];
+                    Voisin->cles[1] = Voisin->cles[0];
+                    Voisin->t = 2;
+                  }
+                  parent->cles[i] = tmp_voisin;
+                  a->cles[1] = tmp;
+                  return;
+                }
+              }
+              return;
+            case 4:
+              for(int i = 0; i<3; i++){
+                if (parent->fils[i] == a || parent->fils[i] == Voisin){
+                  tmp = parent->cles[i];
+                  if (a->cles[1] < tmp){
+                    tmp_voisin = Voisin->cles[0];
+                    Voisin->cles[0] = Voisin->cles[1];
+                    Voisin->cles[1] = Voisin->cles[2];
+                    Voisin->t = 3;
+                  } else {
+                    tmp_voisin = Voisin->cles[2];
+                    Voisin->t = 3;
+                  }
+                  parent->cles[i] = tmp_voisin;
+                  a->cles[1] = tmp;
+                  return;
+                }
+              }
+            }
       }
     case 3:
     case 4:
