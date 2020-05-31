@@ -835,6 +835,10 @@ void Equilibrage(Arbre234 a, Arbre234 racine) {
 
 void Detruire_Cle (Arbre234 *a, int cle)
 {
+  if ((*a)->t == 2 && (*a)->cles[1] == cle{
+    (*a)->t = 0;
+    return;
+  }
   Detruire_Cle_Rec ((*a), (*a), cle);
   Equilibrage((*a), (*a));
 }
