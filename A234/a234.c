@@ -355,7 +355,6 @@ void Retirer_Cle(Arbre234 a, int cle){
       return;
     case 4:
       for(int i = 0; i<3; i++){
-        printf("%d %d\n",i, cle );
         if(a->cles[i] == cle){
           a->cles[i] = a->cles[i+1];
           cle = a->cles[i];
@@ -587,7 +586,6 @@ void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
           ajouter_cle(&newArbre, a->fils[indice_fils - 1]->cles[1], 0,NULL);
           ajouter_cle(&newArbre, a->fils[indice_fils]->cles[1], 0,NULL);
           a->fils[indice_fils] = newArbre;
-          printf("%d\n", indice_fils);
           Retirer_Cle(a, cle);
         } else {
           indice_fils --;
@@ -835,7 +833,7 @@ void Equilibrage(Arbre234 a, Arbre234 racine) {
 
 void Detruire_Cle (Arbre234 *a, int cle)
 {
-  if ((*a)->t == 2 && (*a)->cles[1] == cle){
+  if ((*a)->t == 2 && (*a)->cles[1] == cle && (*a)->fils[1]->t == 0){
     (*a)->t = 0;
     return;
   }
