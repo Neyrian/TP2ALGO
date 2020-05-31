@@ -2,9 +2,7 @@
 #define file_h
 
 #include "a234.h"
-
 #define MAX_FILE_SIZE       64
-
 typedef struct {
   int tete ;
   int queue ;

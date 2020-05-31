@@ -334,7 +334,6 @@ void Affichage_Cles_Triees_NonRecursive (Arbre234 a)
 
 }
 
-
 void Retirer_Cle(Arbre234 a, int cle){
   switch(a->t){
     case 3:
@@ -820,51 +819,9 @@ void Equilibrage(Arbre234 a, Arbre234 racine) {
   }
 
 }
+
 void Detruire_Cle (Arbre234 *a, int cle)
 {
-  switch((*a)->t){
-    case 0:
-      return;
-    case 2:
-      if ((*a)->cles[1]<cle){
-        Detruire_Cle_Rec ((*a)->fils[2], (*a), cle);
-      } else if ((*a)->cles[1] > cle){
-        Detruire_Cle_Rec ((*a)->fils[1], (*a), cle);
-      } else {
-        Detruire_Cle_Rec ((*a), (*a), cle);
-      }
-      Equilibrage((*a), (*a));
-      return;
-    case 3:
-      for(int i = 0; i<2; i++){
-        if ((*a)->cles[i] > cle){
-          Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
-          Equilibrage((*a), (*a));
-          return;
-        } else if ((*a)->cles[i] == cle) {
-          Detruire_Cle_Rec ((*a), (*a), cle);
-          Equilibrage((*a), (*a));
-          return;
-        }
-      }
-      Detruire_Cle_Rec((*a)->fils[2], (*a), cle);
-      Equilibrage((*a), (*a));
-      return;
-    case 4:
-      for(int i = 0; i<3; i++){
-        if((*a)->cles[i] > cle){
-          Detruire_Cle_Rec ((*a)->fils[i], (*a), cle);
-          Equilibrage((*a), (*a));
-          return;
-        }else if ((*a)->cles[i] == cle) {
-          Detruire_Cle_Rec ((*a), (*a), cle);
-          Equilibrage((*a), (*a));
-          return;
-        }
-      }
-      Detruire_Cle_Rec((*a)->fils[3], (*a), cle);
-      Equilibrage((*a), (*a));
-      return;
-  }
-  return ;
+  Detruire_Cle_Rec ((*a), (*a), cle);
+  Equilibrage((*a), (*a));
 }
