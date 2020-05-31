@@ -342,6 +342,12 @@ void Retirer_Cle(Arbre234 a, int cle){
         if(a->cles[i] == cle){
           a->cles[i] = a->cles[i+1];
           cle = a->cles[i];
+          if (i == 1) {
+            a->fils[1] = a->fils[0];
+          } else if (i == 0) {
+            a->fils[0] = a->fils[1];
+            a->fils[1] = a->fils[2];
+          }
         }
       }
       a->cles[2] = a->cles[1];
@@ -353,6 +359,11 @@ void Retirer_Cle(Arbre234 a, int cle){
         if(a->cles[i] == cle){
           a->cles[i] = a->cles[i+1];
           cle = a->cles[i];
+          if (i == 2) {
+            a->fils[2] = a->fils[3];
+          } else if (i == 1) {
+            a->fils[1] = a->fils[2];
+          }
         }
       }
       a->t = 3;
@@ -540,11 +551,18 @@ void Detruire_Cle_Noeud_Feuille(Arbre234 a, Arbre234 parent, int cle){
 void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
   int newVal;
   int indice_fils;
+  Arbre234 newArbre = NULL;
   switch (a->t) {
     case 2:
-      newVal = CleMin(a->fils[2]);
-      a->cles[1] = newVal;
-      Detruire_Cle(&(a->fils[2]), newVal);
+      if (a->fils[2]->t == 2 && a->fils[2]->fils[1]->t == 0) {
+        newVal = CleMax(a->fils[1]);
+        a->cles[1] = newVal;
+        Detruire_Cle(&(a->fils[1]), newVal);
+      } else {
+        newVal = CleMin(a->fils[2]);
+        a->cles[1] = newVal;
+        Detruire_Cle(&(a->fils[2]), newVal);
+      }
       return;
     case 3:
       if (a->cles[0] == cle) {
@@ -552,9 +570,24 @@ void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
       } else {
         indice_fils = 2;
       }
-      newVal = CleMin(a->fils[indice_fils]);
-      a->cles[indice_fils - 1] = newVal;
-      Detruire_Cle(&(a->fils[indice_fils]), newVal);
+      if (a->fils[indice_fils]->t == 2 && a->fils[indice_fils]->fils[1]->t == 0) {
+        if (a->fils[indice_fils -1 ]->t == 2 && a->fils[indice_fils - 1]->fils[1]->t == 0) {
+          ajouter_cle(&newArbre, a->fils[indice_fils - 1]->cles[1], 0,NULL);
+          ajouter_cle(&newArbre, a->fils[indice_fils]->cles[1], 0,NULL);
+          a->fils[indice_fils] = newArbre;
+          printf("%d\n", indice_fils);
+          Retirer_Cle(a, cle);
+        } else {
+          indice_fils --;
+          newVal = CleMax(a->fils[indice_fils]);
+          a->cles[indice_fils] = newVal;
+          Detruire_Cle(&(a->fils[indice_fils]), newVal);
+        }
+      } else {
+        newVal = CleMin(a->fils[indice_fils]);
+        a->cles[indice_fils - 1] = newVal;
+        Detruire_Cle(&(a->fils[indice_fils]), newVal);
+      }
       return;
     case 4:
       if (a->cles[0] == cle) {
@@ -564,9 +597,23 @@ void Detruire_Cle_Noeud_Pas_Feuille(Arbre234 a, int cle){
       } else {
         indice_fils = 3;
       }
-      newVal = CleMin(a->fils[indice_fils]);
-      a->cles[indice_fils - 1] = newVal;
-      Detruire_Cle(&(a->fils[indice_fils]), newVal);
+      if (a->fils[indice_fils]->t == 2 && a->fils[indice_fils]->fils[1]->t == 0) {
+        if (a->fils[indice_fils -1 ]->t == 2 && a->fils[indice_fils - 1]->fils[1]->t == 0) {
+          ajouter_cle(&newArbre, a->fils[indice_fils - 1]->cles[1], 0,NULL);
+          ajouter_cle(&newArbre, a->fils[indice_fils]->cles[1], 0,NULL);
+          a->fils[indice_fils] = newArbre;
+          Retirer_Cle(a, cle);
+        } else {
+          indice_fils --;
+          newVal = CleMax(a->fils[indice_fils]);
+          a->cles[indice_fils] = newVal;
+          Detruire_Cle(&(a->fils[indice_fils]), newVal);
+        }
+      } else {
+        newVal = CleMin(a->fils[indice_fils]);
+        a->cles[indice_fils - 1] = newVal;
+        Detruire_Cle(&(a->fils[indice_fils]), newVal);
+      }
       return;
   }
   return;
